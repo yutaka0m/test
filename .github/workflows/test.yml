@@ -18,6 +18,7 @@ jobs:
           script: |
             const comment = context.payload.comment.body.toLowerCase();
             console.log(comment)
+            console.log(context.payload.pull_request)
 
             if (comment.includes('atlantis apply')) {
               github.rest.issues.addLabels({
