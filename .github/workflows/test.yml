@@ -18,16 +18,12 @@ jobs:
           script: |
             const comment = context.payload.comment.body.toLowerCase();
             console.log(comment)
-            return { commentContainsApply: comment.includes('atlantis apply') };
 
-      - name: 'Start applying'
-        if: ${{ steps.check-comment.outputs.commentContainsApply }}
-        uses: actions/github-script@v6
-        with:
-          script: |
-            github.rest.issues.addLabels({
-              issue_number: context.issue.number,
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              labels: ['applying']
-            })
+            if comment.includes('atlantis apply') {
+              github.rest.issues.addLabels({
+                issue_number: context.issue.number,
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                labels: ['applying']
+              })
+            }
