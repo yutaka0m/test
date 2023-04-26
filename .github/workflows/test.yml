@@ -21,7 +21,7 @@ jobs:
             const comment = context.payload.comment.body.toLowerCase();
             console.log(comment);
 
-            if (comment === apply_command) {
+            if (comment.startsWith(apply_command)) {
               github.rest.issues.addLabels({
                 issue_number: context.payload.issue.number,
                 owner: context.repo.owner,
