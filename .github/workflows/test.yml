@@ -16,9 +16,12 @@ jobs:
         uses: actions/github-script@v6
         with:
           script: |
+            const apply_command = 'atlantis apply'
+            
             const comment = context.payload.comment.body.toLowerCase();
+            console.log(comment);
 
-            if (comment === 'atlantis apply') {
+            if (comment === apply_command) {
               github.rest.issues.addLabels({
                 issue_number: context.payload.issue.number,
                 owner: context.repo.owner,
