@@ -18,7 +18,6 @@ jobs:
           script: |
             const comment = context.payload.comment.body.toLowerCase();
             return { commentContainsApply: comment.includes('atlantis apply') };
-        if: ${{ steps.check-comment.outputs.commentContainsApply }}
 
       - name: 'Start applying'
         if: ${{ steps.check-comment.outputs.commentContainsApply }}
