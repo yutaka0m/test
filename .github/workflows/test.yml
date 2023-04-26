@@ -16,7 +16,7 @@ jobs:
     steps:
       # 「terraform apply」とユーザーがコメントした場合
       - name: 'Start applying'
-        if: github.event.issue.state == 'open' && github.event.issue.pull_request != null && github.event.comment.body == env.START_APPLYING_COMMENT
+        if: github.event.comment.body == env.START_APPLYING_COMMENT
         uses: actions/github-script@v3
         with:
           script: |
