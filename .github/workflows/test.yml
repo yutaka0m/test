@@ -6,17 +6,22 @@ on:
   issue_comment:
     types: [created]
 
-env:
-  START_APPLYING_COMMENT: 'atlantis apply'
-
 jobs:
   job:
     name: 'label'
     runs-on: ubuntu-latest
     steps:
-      # 「terraform apply」とユーザーがコメントした場合
+      - name: Check for "atlantis apply" comment
+        id: check-comment
+        uses: actions/github-script@v3
+        with:
+          script: |
+            const comment = context.payload.comment.body.toLowerCase();
+            return { commentContainsApply: comment.includes('atlantis apply') };
+        if: ${{ steps.check-comment.outputs.commentContainsApply }}
+
       - name: 'Start applying'
-        if: github.event.comment.body == env.START_APPLYING_COMMENT
+      if: ${{ steps.check-comment.outputs.commentContainsApply }}
         uses: actions/github-script@v3
         with:
           script: |
