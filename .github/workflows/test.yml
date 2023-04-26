@@ -21,7 +21,7 @@ jobs:
 
             if (comment.includes('atlantis apply')) {
               github.rest.issues.addLabels({
-                issue_number: ccontext.payload.pull_request.number,
+                issue_number: context.payload.pull_request.number,
                 owner: context.repo.owner,
                 repo: context.repo.repo,
                 labels: ['applying']
