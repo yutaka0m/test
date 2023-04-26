@@ -17,7 +17,13 @@ jobs:
       # 「terraform apply」とユーザーがコメントした場合
       - name: 'Start applying'
         if: github.event.issue.state == 'open' && github.event.issue.pull_request != null && github.event.comment.body == env.START_APPLYING_COMMENT
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          gh pr update ${{ github.event.pull_request.number }} --add-label "apply中"
+        uses: actions/github-script@v3
+        with:
+          script: |
+            const payload = {
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              labels: ['applying']
+            };
+            return github.issues.addLabels(payload);
