@@ -13,7 +13,7 @@ jobs:
     steps:
       - name: Check for "atlantis apply" comment
         id: check-comment
-        uses: actions/github-script@v3
+        uses: actions/github-script@v6
         with:
           script: |
             const comment = context.payload.comment.body.toLowerCase();
@@ -21,7 +21,7 @@ jobs:
 
       - name: 'Start applying'
         if: ${{ steps.check-comment.outputs.commentContainsApply }}
-        uses: actions/github-script@v3
+        uses: actions/github-script@v6
         with:
           script: |
             github.rest.issues.addLabels({
@@ -30,4 +30,3 @@ jobs:
               repo: context.repo.repo,
               labels: ['applying']
             })
-
